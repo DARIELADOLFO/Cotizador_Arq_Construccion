@@ -1,0 +1,29 @@
+{
+    "total_materiales": 1536350.0,
+    "total_mano_obra": 949350.0,
+    "subtotal_obra": 2485700.0,
+    "imprevistos": 248570.0,
+    "honorarios": 153635.0,
+    "gran_total": 2887905.0,
+    "riesgo": "Medio",
+    "dias_totales": 105,
+    "distribucion_fases": {
+        "Preliminares": { "pct": 3.0, "materiales": 46071.05, "mano_obra": 99428.0 },
+        "Estructura":   { "pct": 28.0, "materiales": 429978.0, "mano_obra": 248535.0 },
+        "Albanileria":  { "pct": 25.0, "materiales": 323125.0, "mano_obra": 289350.0 },
+        "Instalaciones":{ "pct": 15.0, "materiales": 177225.0, "mano_obra": 143302.5 },
+        "Terminaciones":{ "pct": 24.0, "materiales": 353760.0, "mano_obra": 215731.0 }
+    },
+    "profesionales": {
+        "maestro_constructor": { "tarifa_dia": 3000, "dias": 105, "total": 315000 },
+        "electricista": { "tarifa_dia": 2500, "dias": 37, "total": 92500 },
+        "plomero": { "tarifa_dia": 2500, "dias": 32, "total": 80000 },
+        "carpintero": { "tarifa_dia": 2200, "dias": 42, "total": 92400 }
+    },
+    "metadata": {
+        "version": "1.0",
+        "moneda": "RD$",
+        "fecha_generado": "2025-05-01",
+        "fuente": "Excel presupuesto.xlsx — Hoja: Construccion_Obra_Civil"
+    }
+}

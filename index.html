@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConstructIQ — Cotizador Inteligente</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css">
+    <script src="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-wrapper">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+                        <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="logo-name">ConstructIQ</span>
+                    <span class="logo-tag">Cotizador Pro</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-body">
+
+            <!-- 01 DATOS DEL PROYECTO -->
+            <div class="form-section">
+                <div class="section-label">
+                    <span class="section-num">01</span>
+                    <span>Proyecto</span>
+                </div>
+
+                <div class="field-group">
+                    <label>Nombre del Proyecto</label>
+                    <input type="text" id="proyecto" placeholder="Ej. Residencia Norte">
+                </div>
+
+                <div class="field-group">
+                    <label>📅 Fecha de Inicio</label>
+                    <input type="date" id="fechaInicio">
+                </div>
+
+                <div class="field-row">
+                    <div class="field-group">
+                        <label>Metros²</label>
+                        <input type="number" id="metros" value="90" min="0">
+                    </div>
+                    <div class="field-group">
+                        <label>Niveles</label>
+                        <input type="number" id="niveles" value="2" min="1">
+                    </div>
+                </div>
+
+                <div class="field-row">
+                    <div class="field-group">
+                        <label>Habitaciones</label>
+                        <input type="number" id="habitaciones" value="3" min="0">
+                    </div>
+                    <div class="field-group">
+                        <label>Baños</label>
+                        <input type="number" id="banos" value="2" min="0">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label>Calidad</label>
+                    <div class="quality-selector">
+                        <button class="quality-btn" data-value="economico" onclick="selectCalidad(this)">Económico</button>
+                        <button class="quality-btn active" data-value="medio" onclick="selectCalidad(this)">Medio</button>
+                        <button class="quality-btn" data-value="premium" onclick="selectCalidad(this)">Premium</button>
+                        <button class="quality-btn" data-value="lujo" onclick="selectCalidad(this)">Lujo</button>
+                    </div>
+                    <input type="hidden" id="calidad" value="medio">
+                </div>
+            </div>
+
+            <!-- 02 HONORARIOS -->
+            <div class="form-section">
+                <div class="section-label">
+                    <span class="section-num">02</span>
+                    <span>Honorarios</span>
+                </div>
+
+                <div class="field-row">
+                    <div class="field-group">
+                        <label>Arquitecto %</label>
+                        <input type="number" id="arquitecto" value="10" min="0" max="100">
+                    </div>
+                    <div class="field-group">
+                        <label>Imprevistos %</label>
+                        <input type="number" id="imprevistos" value="10" min="0" max="100">
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label>Maestro Constructor <span class="field-hint">RD$/día</span></label>
+                    <input type="number" id="maestro" value="3000" min="0">
+                </div>
+                <div class="field-group">
+                    <label>Electricista <span class="field-hint">RD$/día</span></label>
+                    <input type="number" id="electricista" value="2500" min="0">
+                </div>
+                <div class="field-group">
+                    <label>Plomero <span class="field-hint">RD$/día</span></label>
+                    <input type="number" id="plomero" value="2500" min="0">
+                </div>
+                <div class="field-group">
+                    <label>Carpintero <span class="field-hint">RD$/día</span></label>
+                    <input type="number" id="carpintero" value="2200" min="0">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="sidebar-footer">
+            <button class="calc-btn" onclick="calcularProyecto()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+                </svg>
+                Calcular Proyecto
+            </button>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <div class="topbar-left">
+                <span class="topbar-title" id="topbarTitle">Nuevo Proyecto</span>
+                <span class="topbar-badge" id="calidadBadge">Calidad Media</span>
+            </div>
+            <div class="topbar-right">
+                <div class="live-indicator">
+                    <span class="live-dot"></span>
+                    <span>En vivo</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- KPI STRIP -->
+        <div class="kpi-strip">
+            <div class="kpi-card kpi-main">
+                <div class="kpi-icon">💰</div>
+                <div class="kpi-data">
+                    <span class="kpi-label">Costo Total</span>
+                    <span class="kpi-value" id="costoTotal">RD$ 0</span>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">⏱</div>
+                <div class="kpi-data">
+                    <span class="kpi-label">Duración</span>
+                    <span class="kpi-value" id="duracion">— días</span>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon" id="riesgoIcon">🟢</div>
+                <div class="kpi-data">
+                    <span class="kpi-label">Riesgo</span>
+                    <span class="kpi-value" id="riesgo">Bajo</span>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">📐</div>
+                <div class="kpi-data">
+                    <span class="kpi-label">Costo / m²</span>
+                    <span class="kpi-value" id="costoM2">—</span>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">👷</div>
+                <div class="kpi-data">
+                    <span class="kpi-label">Mano de Obra</span>
+                    <span class="kpi-value" id="totalManoObra">—</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHARTS GRID -->
+        <div class="charts-grid">
+            <div class="chart-panel">
+                <div class="panel-header">
+                    <h3>Distribución de Costos</h3>
+                    <span class="panel-tag">Por categoría</span>
+                </div>
+                <div class="donut-wrapper">
+                    <canvas id="graficoCostos"></canvas>
+                    <div class="donut-center">
+                        <span class="donut-label">Total</span>
+                        <span class="donut-val" id="donutTotal">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-panel">
+                <div class="panel-header">
+                    <h3>Costos por Fase</h3>
+                    <span class="panel-tag">RD$ estimado</span>
+                </div>
+                <canvas id="graficoFases" style="max-height:250px"></canvas>
+            </div>
+
+            <div class="chart-panel">
+                <div class="panel-header">
+                    <h3>Flujo de Inversión</h3>
+                    <span class="panel-tag">Acumulado semanal</span>
+                </div>
+                <canvas id="graficoLinea" style="max-height:230px"></canvas>
+            </div>
+
+            <div class="chart-panel">
+                <div class="panel-header">
+                    <h3>Costo de Profesionales</h3>
+                    <span class="panel-tag">Comparativo</span>
+                </div>
+                <canvas id="graficoProfesionales" style="max-height:230px"></canvas>
+            </div>
+        </div>
+
+        <!-- DESGLOSE -->
+        <div class="breakdown-section">
+            <div class="panel-header">
+                <h3>Desglose Detallado por Fase</h3>
+                <span class="panel-tag">Materiales + Mano de Obra</span>
+            </div>
+            <div class="breakdown-table" id="breakdownTable"></div>
+        </div>
+
+        <!-- GANTT -->
+        <div class="gantt-section">
+            <div class="panel-header">
+                <h3>📅 Cronograma del Proyecto</h3>
+                <span class="panel-tag" id="ganttRango">—</span>
+            </div>
+            <div class="gantt-wrapper">
+                <svg id="gantt"></svg>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
