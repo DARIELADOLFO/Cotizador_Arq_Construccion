@@ -355,3 +355,305 @@ canvas { max-height: 260px; }
     .kpi-strip { grid-template-columns: 1fr; }
     .field-row { grid-template-columns: 1fr; }
 }
+
+  EXTRA HOVERS PREMIUM
+============================================= */
+
+input:hover,
+input[type="number"]:hover,
+input[type="text"]:hover,
+input[type="date"]:hover{
+
+    border-color: var(--accent);
+
+    background: #f8fffc;
+}
+
+.chart-panel:hover,
+.breakdown-section:hover,
+.gantt-section:hover{
+
+    transform: translateY(-3px);
+
+    transition: all .25s ease;
+
+    box-shadow:
+        0 10px 30px rgba(30,80,60,0.12);
+}
+
+.kpi-card:hover .kpi-icon{
+
+    transform: scale(1.08);
+
+    transition: .25s;
+}
+
+.breakdown-row:hover .br-dot{
+
+    transform: scale(1.25);
+
+    transition: .25s;
+}
+
+/* =============================================
+   BOTONES QUALITY MÁS PREMIUM
+============================================= */
+
+.quality-btn{
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.quality-btn::before{
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: -100%;
+
+    width: 100%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.25),
+            transparent
+        );
+
+    transition: .5s;
+}
+
+.quality-btn:hover::before{
+
+    left: 100%;
+}
+
+/* =============================================
+   GLASS EFFECT SUAVE
+============================================= */
+
+.chart-panel,
+.breakdown-section,
+.gantt-section,
+.kpi-card{
+
+    backdrop-filter: blur(8px);
+}
+
+/* =============================================
+   SCROLL HORIZONTAL TABLA
+============================================= */
+
+.breakdown-table{
+
+    overflow-x: auto;
+}
+
+/* =============================================
+   GANTT RESPONSIVE
+============================================= */
+
+.gantt-wrapper{
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+}
+
+#gantt{
+
+    min-width: 900px;
+}
+
+/* =============================================
+   CHART RESPONSIVE
+============================================= */
+
+.chart-panel canvas{
+
+    width: 100% !important;
+
+    height: auto !important;
+}
+
+/* =============================================
+   SIDEBAR MOBILE
+============================================= */
+
+@media (max-width: 860px){
+
+    .sidebar{
+
+        padding-bottom: 25px;
+    }
+
+    .sidebar-header{
+
+        position: sticky;
+
+        top: 0;
+
+        z-index: 10;
+
+        background: white;
+    }
+
+    .sidebar-footer{
+
+        position: sticky;
+
+        bottom: 0;
+
+        background: white;
+
+        z-index: 10;
+    }
+
+    .calc-btn{
+
+        box-shadow:
+            0 10px 25px rgba(29,184,122,0.25);
+    }
+}
+
+/* =============================================
+   MOBILE CARDS
+============================================= */
+
+@media (max-width: 700px){
+
+    .topbar{
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 12px;
+    }
+
+    .topbar-title{
+
+        font-size: 18px;
+    }
+
+    .kpi-card{
+
+        padding: 15px;
+    }
+
+    .kpi-value{
+
+        font-size: 15px !important;
+    }
+
+    .kpi-main .kpi-value{
+
+        font-size: 18px !important;
+    }
+
+    .chart-panel{
+
+        padding: 16px;
+    }
+
+    .breakdown-section{
+
+        padding: 16px;
+    }
+
+    .gantt-section{
+
+        padding: 16px;
+    }
+}
+
+/* =============================================
+   EXTRA SMALL DEVICES
+============================================= */
+
+@media (max-width: 480px){
+
+    .main-content{
+
+        padding: 12px;
+    }
+
+    .sidebar-body{
+
+        padding: 14px;
+    }
+
+    .field-row{
+
+        grid-template-columns: 1fr;
+    }
+
+    .quality-selector{
+
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .kpi-strip{
+
+        gap: 10px;
+    }
+
+    .chart-panel h3{
+
+        font-size: 14px;
+    }
+
+    .panel-tag{
+
+        font-size: 9px;
+    }
+
+    .breakdown-row{
+
+        font-size: 11px;
+    }
+
+    .logo-name{
+
+        font-size: 16px;
+    }
+}
+
+/* =============================================
+   ANIMACIONES SUAVES
+============================================= */
+
+.chart-panel,
+.kpi-card,
+.breakdown-section,
+.gantt-section,
+.breakdown-row,
+.calc-btn{
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease,
+        background .25s ease;
+}
+
+/* =============================================
+   LOADING FEEL
+============================================= */
+
+.kpi-card,
+.chart-panel{
+
+    animation:
+        fadeUp .5s ease both;
+}
